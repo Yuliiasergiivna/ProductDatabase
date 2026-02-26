@@ -15,5 +15,7 @@ namespace ProductLibrary.ASPMVC.Models.Product
         public decimal CurrentPrice { get; set; }
         [DisplayName("Quantité en stock: ")]
         public int Stock { get; set; }
+        [ScaffoldColumn(false)]
+        public int EntryCount { get;set; }
     }
 }

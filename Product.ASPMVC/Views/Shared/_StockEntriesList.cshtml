@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ProductLibrary.ASPMVC.Models.Stock.StockEntryViewModel>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Quantité</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entry in Model)
+        {
+            <tr>
+                <td>@entry.EntryDate.ToString("dd/MM/yyyy HH:mm")</td>
+                <td class="@(entry.StockOperation > 0 ? "text-success" : "text-danger")">
+                    @entry.StockOperation
+                </td>
+                <td>
+                    @entry.OperationType
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

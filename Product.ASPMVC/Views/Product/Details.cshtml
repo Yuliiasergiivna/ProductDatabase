@@ -33,7 +33,7 @@
 </div>
 
 <hr />
-<h3>Historique des mouvements</h3>
+@* <h3>@Html.DisplayNameFor(m => m.StockEntries)</h3>
 
 <table class="table table-striped">
     <thead>
@@ -52,9 +52,11 @@
                     @entry.StockOperation
                 </td>
                 <td>
-                    @(entry.StockOperation > 0 ? "Réception" : "Sortie")
+                    @entry.OperationType
                 </td>
             </tr>
         }
     </tbody>
-</table>
+</table> *@
+<h3>@Html.DisplayNameFor(m => m.StockEntries)</h3>
+<partial name="_StockEntriesList" model="Model.StockEntries" />

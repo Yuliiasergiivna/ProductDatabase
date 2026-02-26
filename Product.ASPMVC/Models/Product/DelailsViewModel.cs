@@ -16,6 +16,7 @@ namespace ProductLibrary.ASPMVC.Models.Product
         public decimal CurrentPrice { get; set; }
         [DisplayName("Quantité en stock: ")]
         public int Stock { get; set; }
+        [DisplayName("Historique des mouvements: ")]
         public  IEnumerable<StockEntryViewModel> StockEntries { get; set; }
 
 

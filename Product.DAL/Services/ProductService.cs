@@ -63,7 +63,7 @@ namespace ProductLibrary.DAL.Services
                     command.CommandText = "SP_Product_Insert";
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue(nameof(Product.Name), product.Name);
-                    command.Parameters.AddWithValue(nameof(Product.Description), (object?)product ?? DBNull.Value);
+                    command.Parameters.AddWithValue(nameof(Product.Description), (object?)product.Description ?? DBNull.Value);
                     command.Parameters.AddWithValue(nameof(Product.CurrentPrice), product.CurrentPrice);
                     if (_connection.State == ConnectionState.Closed) _connection.Open();
                     command.ExecuteNonQuery();

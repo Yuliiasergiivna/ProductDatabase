@@ -1,34 +1,35 @@
 ﻿@model ProductLibrary.ASPMVC.Models.Product.CreateForm
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Créer un produit";
 }
 
-<h1>Create</h1>
+<h1>Créer un nouveau produit</h1>
 
-<h4>CreateForm</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Nom du produit</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
+                <label asp-for="Description" class="control-label">Description</label>
+                <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CurrentPrice" class="control-label"></label>
+                <label asp-for="CurrentPrice" class="control-label">Prix actuel</label>
                 <input asp-for="CurrentPrice" class="form-control" />
                 <span asp-validation-for="CurrentPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
             </div>
         </form>
     </div>

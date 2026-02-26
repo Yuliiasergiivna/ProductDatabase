@@ -28,6 +28,7 @@ namespace ProductLibrary.ASPMVC.Controllers
                 Description = p.Description,
                 CurrentPrice = p.CurrentPrice,
                 Stock = p.TotalStock,
+                EntryCount = p.StockEntries.Count()
             });
             return View(viewModels);
         }
@@ -93,11 +94,12 @@ namespace ProductLibrary.ASPMVC.Controllers
             }
             return View(vm);
         }
-
+        //[TypeFilter<NoStockEntry>]
         public IActionResult Delete(int id) 
         { 
             var product = _bllService.Get(id);
-            if (product == null) return NotFound();
+            if (product == null) return RedirectToAction(nameof(Index));
+            if (product.StockEntries.Count() > 0) return RedirectToAction(nameof(Index));
 
             var vm = new DelailsViewModel
             {

@@ -73,6 +73,9 @@
     <Build Include="StoredProcedures\SP_StockEntry_Insert.sql" />
     <Build Include="StoredProcedures\SP_StockEntry_Get_ById.sql" />
     <Build Include="StoredProcedures\SP_StockEntry_Delete.sql" />
+    <Build Include="Table\User.sql" />
+    <Build Include="StoredProcedures\SP_User_Insert.sql" />
+    <Build Include="StoredProcedures\SP_User_CheckPassword.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ProductDatabase.refactorlog" />

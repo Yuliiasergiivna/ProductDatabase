@@ -34,5 +34,15 @@ namespace ProductLibrary.DAL.Mappers
             };
 
         }
+        public static User ToUser(this IDataRecord record)
+        {
+            if (record is null) throw new ArgumentNullException(nameof(record));
+            return new User()
+            {
+                UserId = (Guid)record[nameof(User.UserId)],
+                Email = (string)record[nameof(User.Email)],
+                Password = "*********"
+            };
+        }
     }
 }

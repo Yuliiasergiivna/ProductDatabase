@@ -13,6 +13,7 @@ namespace ProductLibrary.BLL.Services
 {
     public class ProductService :
         IProductRepository<Entities.Product>
+        
     {
         private readonly IProductRepository<DAL.Entities.Product> _dalService;
         private readonly IStockRepository<DAL.Entities.StockEntry> _stockService;

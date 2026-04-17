@@ -12,13 +12,15 @@ namespace ProductLibrary.BLL.Entities
         public DateTime EntryDate { get; private set; }
         public int StockOperation { get; private set; }
         public int ProductId { get; private set; }
+        public Guid UserId { get; private set; }
 
-        public StockEntry(int stockEntryId, DateTime entryDate, int stockOperation, int productId)
+        public StockEntry(int stockEntryId, DateTime entryDate, int stockOperation, int productId, Guid userId)
         {
             StockEntryId = stockEntryId;
             EntryDate = entryDate;
             StockOperation = stockOperation;
             ProductId = productId;
+            UserId = userId;
         }
     }
 }

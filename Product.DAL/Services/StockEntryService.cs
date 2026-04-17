@@ -32,6 +32,7 @@ namespace ProductLibrary.DAL.Services
                     command.Parameters.AddWithValue(nameof(StockEntry.EntryDate), entity.EntryDate);
                     command.Parameters.AddWithValue(nameof(StockEntry.StockOperation), entity.StockOperation);
                     command.Parameters.AddWithValue(nameof(StockEntry.ProductId), entity.ProductId);
+                    command.Parameters.AddWithValue(nameof(StockEntry.UserId), entity.UserId);
                     if (_connection.State == ConnectionState.Closed) _connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -116,6 +117,7 @@ namespace ProductLibrary.DAL.Services
                 command.Parameters.AddWithValue(nameof(StockEntry.EntryDate), newData.EntryDate);
                 command.Parameters.AddWithValue(nameof(StockEntry.StockOperation), newData.StockOperation);
                 command.Parameters.AddWithValue(nameof(StockEntry.ProductId), newData.ProductId);
+                command.Parameters.AddWithValue(nameof(StockEntry.UserId), newData.UserId);
                 if (_connection.State == ConnectionState.Closed) _connection.Open();
                 command.ExecuteNonQuery();
                 if (_connection.State == ConnectionState.Open) _connection.Close();

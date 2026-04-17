@@ -24,20 +24,22 @@ namespace ProductLibrary.BLL.Entities
             }
         }
         public decimal CurrentPrice { get; private set; }
+        public Guid UserId { get; private set; }
 
         public int TotalStock { get {
             return StockEntries.Sum(s => s.StockOperation);
             } 
         }
 
-        public Product() { }
+        //public Product() { }
         //Create
-        public Product( string name, string? description, decimal currentPrice)
+        public Product( string name, string? description, decimal currentPrice, Guid userId)
         {
   
             Name = name;
             Description = description;
             CurrentPrice = currentPrice;
+            UserId = userId;
         }
 
         //public Product(int totalStock)
@@ -50,18 +52,25 @@ namespace ProductLibrary.BLL.Entities
         //}
         public IEnumerable<StockEntry> StockEntries { get; set; } = new List<StockEntry>();
         //Update
-        public Product(int productId, string name, string? description, decimal currentPrice)
+        public Product(int productId, string name, string? description, decimal currentPrice, Guid userId)
         {
             ProductId = productId;
             Name = name;
             Description = description;
             CurrentPrice = currentPrice;
-         
+            UserId = userId;
         }
 
-        public Product(int productId, string name, string description, decimal currentPrice, IEnumerable<StockEntry> entries) : this(productId, name, description, currentPrice)
+        public Product(int productId, string name, string description, decimal currentPrice, Guid userId, IEnumerable<StockEntry> entries) : this(productId, name, description, currentPrice, userId)
         {
             StockEntries = entries;
+        }
+
+        public Product(string name, string? description, decimal currentPrice)
+        {
+            Name = name;
+            Description = description;
+            CurrentPrice = currentPrice;
         }
     }
 }

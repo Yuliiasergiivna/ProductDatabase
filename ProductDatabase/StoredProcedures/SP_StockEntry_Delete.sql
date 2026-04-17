@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[SP_StockEntry_Delete]
 	@productId INT
+	
 
 AS
 BEGIN
@@ -7,4 +8,5 @@ BEGIN
 		[dbo].[StockEntry]
 	WHERE 
 		[ProductId] = @productId
+		
 END

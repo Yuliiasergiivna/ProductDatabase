@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProductLibrary.DAL.Entities;
 
 namespace ProductLibrary.BLL.Mappers
 {
@@ -16,7 +17,8 @@ namespace ProductLibrary.BLL.Mappers
                 dalEntry.StockEntryId,
                 dalEntry.EntryDate,
                 dalEntry.StockOperation,
-                dalEntry.ProductId
+                dalEntry.ProductId,
+                dalEntry.UserId
             );
         }
         public static DAL.Entities.StockEntry ToDAL(this BLL.Entities.StockEntry bllEntry)
@@ -27,7 +29,8 @@ namespace ProductLibrary.BLL.Mappers
             {
                 EntryDate = bllEntry.EntryDate,
                 StockOperation = bllEntry.StockOperation,
-                ProductId = bllEntry.ProductId
+                ProductId = bllEntry.ProductId,
+                UserId = bllEntry.UserId
             };
         }
     }

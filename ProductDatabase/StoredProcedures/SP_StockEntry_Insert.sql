@@ -1,15 +1,19 @@
 ﻿CREATE PROCEDURE [dbo].[SP_StockEntry_Insert]
 	@entryDate DATETIME,
 	@stockOperation INT,
-	@productId INT
+	@productId INT,
+	@userId UNIQUEIDENTIFIER
 AS
 BEGIN
+	SET NOCOUNT ON;
 	INSERT INTO [dbo].[StockEntry] (
 		EntryDate, 
 		StockOperation, 
-		ProductId)
+		ProductId,
+		UserId)
 	VALUES (
 		@entryDate, 
 		@stockOperation, 
-		@productId);
+		@productId,
+		@userId);
 END

@@ -28,8 +28,10 @@ namespace ProductLibrary.DAL.Services
                 command.Parameters.AddWithValue(nameof(email), email);
                 command.Parameters.AddWithValue(nameof(password), password);
                 _connection.Open();
-                return (Guid)command.ExecuteScalar();
+                object result = command.ExecuteScalar();
                 _connection.Close();
+
+                return result is Guid guid ? guid : Guid.Empty;
             }
         }
 

@@ -27,5 +27,6 @@ namespace ProductLibrary.ASPMVC.Handlers
                 }
             }
         }
+        public string Email { get; set; }
     }
 }

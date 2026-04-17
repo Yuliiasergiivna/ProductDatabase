@@ -2,12 +2,14 @@
 	@productId INT,
 	@name VARCHAR(64),
 	@description VARCHAR(512),
-	@currentPrice MONEY
+	@currentPrice MONEY,
+	@userId UNIQUEIDENTIFIER
 AS
 BEGIN 
 	UPDATE[Product]
 		SET [Name] = @name,
 			[Description] = @description,
-			[CurrentPrice] = @currentPrice
+			[CurrentPrice] = @currentPrice,
+			[UserId] = @userId
 			WHERE [ProductId] = @productId
 END

@@ -19,7 +19,8 @@ namespace ProductLibrary.DAL.Mappers
                 ProductId = (int)record[nameof(Product.ProductId)],
                 Name = (string)record[nameof(Product.Name)],
                 Description = record[nameof(Product.Description)] is DBNull ? null : (string)record[nameof(Product.Description)],
-                CurrentPrice = (decimal)record[nameof(Product.CurrentPrice)]
+                CurrentPrice = (decimal)record[nameof(Product.CurrentPrice)],
+                UserId =(Guid)record[nameof(Product.UserId)]
             };
         }
         public static StockEntry ToStockEntry(this IDataRecord record)
@@ -30,7 +31,8 @@ namespace ProductLibrary.DAL.Mappers
                 StockEntryId = (int)record[nameof(StockEntry.StockEntryId)],
                 EntryDate = (DateTime)record[nameof(StockEntry.EntryDate)],
                 StockOperation = (int)record[nameof(StockEntry.StockOperation)],
-                ProductId = (int)record[nameof(StockEntry.ProductId)]
+                ProductId = (int)record[nameof(StockEntry.ProductId)],
+                UserId = (Guid)record[nameof(StockEntry.UserId)]
             };
 
         }

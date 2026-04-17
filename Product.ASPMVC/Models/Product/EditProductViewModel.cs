@@ -8,6 +8,8 @@ namespace ProductLibrary.ASPMVC.Models.Product
         [Required]
         [ScaffoldColumn(false)]
         public int ProductId { get; set; }
+        [ScaffoldColumn(false)]
+        public Guid UserId { get; set; }
         [DisplayName("Nom du produit")]
         [Required(ErrorMessage = "Le nom est obligatoire")]
         public string Name { get; set; }

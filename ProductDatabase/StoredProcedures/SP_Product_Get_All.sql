@@ -5,7 +5,8 @@ BEGIN
 	SELECT [ProductId],
 			[Name], 
 		   [Description], 
-		   [CurrentPrice]
+		   [CurrentPrice],
+		   [UserId]
 	FROM [dbo].[Product];		
 END
 GO

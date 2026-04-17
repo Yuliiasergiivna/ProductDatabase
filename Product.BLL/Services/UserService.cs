@@ -1,29 +1,25 @@
-﻿using ProductLibrary.BLL.Entities;
+﻿using System;
 using ProductLibrary.BLL.Mappers;
 using ProductLibrary.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ProductLibrary.BLL.Entities;
 
 namespace ProductLibrary.BLL.Services
 {
-    public class UserService : IUserRepository<User>
+    public class UserService : IUserRepository<ProductLibrary.BLL.Entities.User>
     {
-        private readonly IUserRepository<DAL.Entities.User> _dalService;
+        private readonly IUserRepository<ProductLibrary.DAL.Entities.User> _dalService;
 
-        public UserService(IUserRepository<DAL.Entities.User> dalService)
+        public UserService(IUserRepository<ProductLibrary.DAL.Entities.User> dalService)
         {
             _dalService = dalService;
         }
 
         public Guid CheckPassword(string email, string password)
         {
-            return _dalService.CheckPassword( email, password);
+            return _dalService.CheckPassword(email, password);
         }
 
-        public Guid Create(User entity)
+        public Guid Create(ProductLibrary.BLL.Entities.User entity)
         {
             return _dalService.Create(entity.ToDAL());
         }

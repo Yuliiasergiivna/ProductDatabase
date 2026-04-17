@@ -13,5 +13,6 @@ namespace ProductLibrary.DAL.Entities
         public int StockOperation { get; set; }
       
         public int ProductId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

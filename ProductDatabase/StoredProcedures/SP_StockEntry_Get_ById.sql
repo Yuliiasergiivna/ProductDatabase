@@ -7,9 +7,11 @@ BEGIN
 		[StockEntryId], 
 		[EntryDate], 
 		[StockOperation], 
-		[ProductId]
+		[ProductId],
+		[UserId]
 	FROM 
 		[dbo].[StockEntry]
 	WHERE 
 		[ProductId] = @productId
+		
 END

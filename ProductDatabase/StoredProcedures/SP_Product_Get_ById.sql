@@ -7,7 +7,8 @@ BEGIN
 	SELECT [ProductId],
 			[Name],
 			[Description],
-			[CurrentPrice]
+			[CurrentPrice],
+			[UserId]
 	FROM [dbo].[Product]
 	WHERE [ProductId] = @productId
 END

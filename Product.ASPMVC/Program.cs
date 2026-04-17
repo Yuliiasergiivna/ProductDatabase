@@ -1,7 +1,7 @@
 using Microsoft.Data.SqlClient;
 using ProductLibrary.Common;
-using ProductLibrary.BLL.Services;
-using ProductLibrary.DAL.Services;
+
+
 
 
 namespace ProductLibrary.ASPMVC
@@ -16,11 +16,14 @@ namespace ProductLibrary.ASPMVC
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<SqlConnection>(options => new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ProductDatabase;Integrated Security=True;TrustServerCertificate=True;MultipleActiveResultSets=True;"));
 
+
+            builder.Services.AddScoped<IUserRepository<DAL.Entities.User>, DAL.Services.UserService>();
+            builder.Services.AddScoped<IProductRepository<DAL.Entities.Product>, DAL.Services.ProductService>();
+            builder.Services.AddScoped<IStockRepository<DAL.Entities.StockEntry>, DAL.Services.StockEntryService>();
+
             builder.Services.AddScoped<IUserRepository<BLL.Entities.User>, BLL.Services.UserService>();
             builder.Services.AddScoped<IProductRepository<BLL.Entities.Product>, BLL.Services.ProductService>();
-            builder.Services.AddScoped<IProductRepository<DAL.Entities.Product>, DAL.Services.ProductService>();
-
-            builder.Services.AddScoped<IStockRepository<DAL.Entities.StockEntry>, DAL.Services.StockEntryService>();
+            builder.Services.AddScoped<IStockRepository<BLL.Entities.StockEntry>, BLL.Services.ProductService>();
 
 
 

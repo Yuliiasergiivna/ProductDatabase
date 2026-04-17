@@ -2,6 +2,6 @@
 
 AS
 BEGIN
-	SELECT StockEntryId, EntryDate, StockOperation, ProductId
+	SELECT StockEntryId, EntryDate, StockOperation, ProductId, UserId
 	FROM StockEntry;
 END

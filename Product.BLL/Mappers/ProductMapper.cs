@@ -1,4 +1,5 @@
 ﻿using ProductLibrary.BLL.Entities;
+using ProductLibrary.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +11,18 @@ namespace ProductLibrary.BLL.Mappers
     public static class ProductMapper
     {
         #region Produit
-        public static BLL.Entities.Product ToBLL(this DAL.Entities.Product dalProduct, IEnumerable<DAL.Entities.StockEntry> stockEntries)
+        public static BLL.Entities.Product ToBLL(this DAL.Entities.Product dalProduct, IEnumerable<DAL.Entities.StockEntry> dalstockEntries)
         {
             if (dalProduct is null) throw new ArgumentNullException(nameof(dalProduct));
-            var bllStockEntries = stockEntries
+            var bllStockEntries = dalstockEntries
                                     .Where(entry => entry.ProductId == dalProduct.ProductId)
                                     .Select(entry => entry.ToBLL()).ToList();
-            return new Product(
+            return new ProductLibrary.BLL.Entities.Product(
                 dalProduct.ProductId,
                 dalProduct.Name,
                 dalProduct.Description,
                 dalProduct.CurrentPrice,
+                dalProduct.UserId,
                 bllStockEntries
                 );
         }
@@ -32,7 +34,8 @@ namespace ProductLibrary.BLL.Mappers
                 ProductId = bllProduct.ProductId,
                 Name = bllProduct.Name,
                 Description = bllProduct.Description,
-                CurrentPrice = bllProduct.CurrentPrice
+                CurrentPrice = bllProduct.CurrentPrice,
+                UserId = bllProduct.UserId
             };
  
         }

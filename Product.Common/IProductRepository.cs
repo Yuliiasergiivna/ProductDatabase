@@ -11,8 +11,8 @@ namespace ProductLibrary.Common
         IEnumerable<TEntity> Get();
         TEntity Get(int productId);
         public void Create(TEntity entity);
-        public void Update(int productId, TEntity newData);
+        public void Update(int productId, TEntity newData,Guid userId);
         public void Delete(int productId);
-        void AddStock(int productId, int quantity);
+        void AddStock(int productId, int quantity, Guid userId);
     }
 }

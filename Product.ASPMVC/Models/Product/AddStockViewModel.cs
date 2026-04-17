@@ -7,6 +7,8 @@ namespace ProductLibrary.ASPMVC.Models.Product
     {
         [ScaffoldColumn(false)]
         public int ProductId { get; set; }
+        [ScaffoldColumn(false)]
+        public Guid UserId { get; set; }
         [DisplayName("Nom du produit")]
         public string Name { get; set; }
         [DisplayName ("Quantité à ajouter/retirer")]

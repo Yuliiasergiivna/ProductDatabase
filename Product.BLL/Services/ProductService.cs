@@ -12,7 +12,8 @@ using ProductLibrary.Common;
 namespace ProductLibrary.BLL.Services
 {
     public class ProductService :
-        IProductRepository<Entities.Product>
+        IProductRepository<Entities.Product>,
+        IStockRepository<Entities.StockEntry>
         
     {
         private readonly IProductRepository<DAL.Entities.Product> _dalService;
@@ -25,15 +26,20 @@ namespace ProductLibrary.BLL.Services
             _stockService = stockService;
         }
 
-        public void AddStock(int productId, int quantity)
+        public void AddStock(int productId, int quantity, Guid userId)
         {
-            var entry = new Entities.StockEntry(0, DateTime.Now, quantity, productId);
+            var entry = new Entities.StockEntry(0, DateTime.Now, quantity, productId, userId);
             _stockService.Create(entry.ToDAL());
         }
 
         public void Create(Entities.Product bllProduct)
         {
             _dalService.Create(bllProduct.ToDAL());
+        }
+
+        public void Create(Entities.StockEntry entity)
+        {
+            _stockService.Create(entity.ToDAL());
         }
 
         public void Delete(int productId)
@@ -55,9 +61,26 @@ namespace ProductLibrary.BLL.Services
             return dalProduct.ToBLL(allStockEntries);
         }
 
-        public void Update(int productId, Entities.Product newData)
+        public void Update(int productId, Entities.Product newData, Guid userId)
         {
-            _dalService.Update(productId, newData.ToDAL());
+            _dalService.Update(productId, newData.ToDAL(), userId);
+        }
+
+        public void Update(int stockEntryId, Entities.StockEntry newData)
+        {
+            _stockService.Update(stockEntryId, newData.ToDAL());
+        }
+
+        IEnumerable<Entities.StockEntry> IStockRepository<Entities.StockEntry>.Get()
+        {
+            var dalEntries = _stockService.Get();
+            return dalEntries.Select(e => e.ToBLL());
+        }
+
+        Entities.StockEntry? IStockRepository<Entities.StockEntry>.Get(int stockEntryId)
+        {
+            var dalEntry = _stockService.Get(stockEntryId);
+            return dalEntry?.ToBLL();
         }
     }
 }

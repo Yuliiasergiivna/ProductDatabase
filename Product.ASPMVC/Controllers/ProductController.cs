@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using ProductLibrary.ASPMVC.Models.Product;
 using ProductLibrary.ASPMVC.Models.Stock;
 
+
 namespace ProductLibrary.ASPMVC.Controllers
 { 
     public class ProductController : Controller
@@ -28,7 +29,8 @@ namespace ProductLibrary.ASPMVC.Controllers
                 Description = p.Description,
                 CurrentPrice = p.CurrentPrice,
                 Stock = p.TotalStock,
-                EntryCount = p.StockEntries.Count()
+                EntryCount = p.StockEntries.Count(),
+                UserId = p.UserId
             });
             return View(viewModels);
         }
@@ -43,6 +45,7 @@ namespace ProductLibrary.ASPMVC.Controllers
                 Description = product.Description,
                 CurrentPrice = product.CurrentPrice,
                 Stock = product.TotalStock,
+                UserId = product.UserId,
                 StockEntries = product.StockEntries.Select(s => new StockEntryViewModel
                 {
                     EntryDate = s.EntryDate,
@@ -78,7 +81,8 @@ namespace ProductLibrary.ASPMVC.Controllers
                 ProductId = product.ProductId,
                 Name = product.Name,
                 Description = product.Description,
-                CurrentPrice = product.CurrentPrice
+                CurrentPrice = product.CurrentPrice,
+                UserId = product.UserId,
             };
             return View(vm);
         }
@@ -88,8 +92,8 @@ namespace ProductLibrary.ASPMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var productToUpdate = new Product(vm.ProductId, vm.Name, vm.Description, vm.CurrentPrice);
-                _bllService.Update(id, productToUpdate);
+                var productToUpdate = new Product(vm.ProductId, vm.Name, vm.Description, vm.CurrentPrice, vm.UserId);
+                _bllService.Update(id, productToUpdate,vm.UserId);
                 return RedirectToAction(nameof(Index));
             }
             return View(vm);
@@ -107,6 +111,7 @@ namespace ProductLibrary.ASPMVC.Controllers
                 Name = product.Name,
                 Description = product.Description,
                 CurrentPrice = product.CurrentPrice,
+                UserId = product.UserId,
                 Stock = product.StockEntries.Sum(s => s.StockOperation)
             };
             return View(vm);
@@ -127,6 +132,7 @@ namespace ProductLibrary.ASPMVC.Controllers
                     Name = product.Name,
                     Description = product.Description,
                     CurrentPrice = product.CurrentPrice,
+                    UserId = product.UserId,
                     Stock = product.StockEntries.Sum(s => s.StockOperation)
                 };
                 return View(vm);
@@ -165,7 +171,7 @@ namespace ProductLibrary.ASPMVC.Controllers
                 return View(vm);
             }
             //savegarder
-            _bllService.AddStock(vm.ProductId, vm.Quantity);
+            _bllService.AddStock(vm.ProductId, vm.Quantity, vm.UserId);
 
             return RedirectToAction("Details", new { id = vm.ProductId });
             

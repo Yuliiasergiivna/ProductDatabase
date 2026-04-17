@@ -65,6 +65,7 @@ namespace ProductLibrary.DAL.Services
                     command.Parameters.AddWithValue(nameof(Product.Name), product.Name);
                     command.Parameters.AddWithValue(nameof(Product.Description), (object?)product.Description ?? DBNull.Value);
                     command.Parameters.AddWithValue(nameof(Product.CurrentPrice), product.CurrentPrice);
+                    command.Parameters.AddWithValue(nameof(Product.UserId), product.UserId);
                     if (_connection.State == ConnectionState.Closed) _connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -78,7 +79,7 @@ namespace ProductLibrary.DAL.Services
                 }
             }
         }
-        public void Update(int productId, Product newData)
+        public void Update(int productId, Product newData, Guid userId)
         {
             using (SqlCommand command = _connection.CreateCommand())
             {
@@ -88,6 +89,7 @@ namespace ProductLibrary.DAL.Services
                 command.Parameters.AddWithValue(nameof(Product.Name), newData.Name);
                 command.Parameters.AddWithValue(nameof(Product.Description), (object?)newData.Description ?? DBNull.Value);
                 command.Parameters.AddWithValue(nameof(Product.CurrentPrice), newData.CurrentPrice);
+                command.Parameters.AddWithValue(nameof(Product.UserId), userId);
                 if (_connection.State == ConnectionState.Closed) _connection.Open();
                 command.ExecuteNonQuery();
                 if (_connection.State == ConnectionState.Open) _connection.Close();
@@ -105,7 +107,7 @@ namespace ProductLibrary.DAL.Services
                 if (_connection.State == ConnectionState.Open) _connection.Close();
             }
         }
-        public void AddStock(int productId, int quantity)
+        public void AddStock(int productId, int quantity, Guid userId)
         {
             using (SqlCommand command = _connection.CreateCommand())
             {
@@ -114,6 +116,7 @@ namespace ProductLibrary.DAL.Services
                 command.Parameters.AddWithValue(nameof(StockEntry.EntryDate), DateTime.Now);
                 command.Parameters.AddWithValue(nameof(StockEntry.StockOperation), quantity);
                 command.Parameters.AddWithValue(nameof(StockEntry.ProductId), productId);
+                command.Parameters.AddWithValue(nameof(StockEntry.UserId), userId);
                 if (_connection.State == ConnectionState.Closed) _connection.Open();
                 command.ExecuteNonQuery();
                 if (_connection.State == ConnectionState.Open) _connection.Close();

@@ -26,7 +26,7 @@ namespace ProductLibrary.DAL.Services
                 command.CommandText = "SP_User_CheckPassword";
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue(nameof(email), email);
-                command.Parameters.AddWithValue(nameof(password), password);
+                command.Parameters.AddWithValue(nameof(password), Encoding.UTF8.GetBytes(password));
                 _connection.Open();
                 object result = command.ExecuteScalar();
                 _connection.Close();
@@ -42,10 +42,12 @@ namespace ProductLibrary.DAL.Services
                 command.CommandText = "SP_User_Insert";
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue(nameof(User.Email), entity.Email);
-                command.Parameters.AddWithValue(nameof(User.Password), entity.Password);
+                command.Parameters.AddWithValue(nameof(User.Password), Encoding.UTF8.GetBytes(entity.Password));
                 _connection.Open();
-                return (Guid)command.ExecuteScalar();
+                var result = command.ExecuteScalar();
                 _connection.Close();
+
+                return (Guid)result;
             }
         }
     }

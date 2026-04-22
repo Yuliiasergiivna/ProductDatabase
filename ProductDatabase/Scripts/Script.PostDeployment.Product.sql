@@ -13,7 +13,7 @@ Post-Deployment Script Template
 BEGIN TRANSACTION;
 DECLARE @MyUserId UNIQUEIDENTIFIER = '00000000-0000-0000-0000-000000000001';
 MERGE INTO [dbo].[User] AS Target
-USING (VALUES(@MyUserId, N'yuliia@gmail.com', 0x010203, NEWID()))
+USING (VALUES(@MyUserId, N'yuliia@gmail.com', CONVERT(VARBINARY(64),'Test123.'), NEWID()))
 AS Source ([UserId],[Email],[Password],[Salt])
 ON (Target.[Email] = Source.[Email])
 WHEN NOT MATCHED BY TARGET THEN

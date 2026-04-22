@@ -1,4 +1,5 @@
 using Microsoft.Data.SqlClient;
+using ProductLibrary.ASPMVC.Handlers;
 using ProductLibrary.Common;
 
 
@@ -16,7 +17,6 @@ namespace ProductLibrary.ASPMVC
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<SqlConnection>(options => new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ProductDatabase;Integrated Security=True;TrustServerCertificate=True;MultipleActiveResultSets=True;"));
 
-
             builder.Services.AddScoped<IUserRepository<DAL.Entities.User>, DAL.Services.UserService>();
             builder.Services.AddScoped<IProductRepository<DAL.Entities.Product>, DAL.Services.ProductService>();
             builder.Services.AddScoped<IStockRepository<DAL.Entities.StockEntry>, DAL.Services.StockEntryService>();
@@ -24,8 +24,14 @@ namespace ProductLibrary.ASPMVC
             builder.Services.AddScoped<IUserRepository<BLL.Entities.User>, BLL.Services.UserService>();
             builder.Services.AddScoped<IProductRepository<BLL.Entities.Product>, BLL.Services.ProductService>();
             builder.Services.AddScoped<IStockRepository<BLL.Entities.StockEntry>, BLL.Services.ProductService>();
-
-
+            builder.Services.AddScoped<UserSession>();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true; 
+            });
+            builder.Services.AddHttpContextAccessor();
 
             var app = builder.Build();
 
@@ -42,6 +48,7 @@ namespace ProductLibrary.ASPMVC
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 

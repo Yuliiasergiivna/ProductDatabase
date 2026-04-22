@@ -4,16 +4,17 @@ using ProductLibrary.ASPMVC.Handlers;
 using ProductLibrary.ASPMVC.Models.User;
 using ProductLibrary.BLL.Services;
 using ProductLibrary.BLL.Entities;
+using ProductLibrary.Common;
 
 
 namespace ProductLibrary.ASPMVC.Controllers
 {
     public class UserController : Controller
     {
-        private readonly UserService _bllService;
+        private readonly IUserRepository<ProductLibrary.BLL.Entities.User> _bllService;
         private readonly UserSession _userSession;
 
-        public UserController(UserService bllService, UserSession userSession)
+        public UserController(IUserRepository<ProductLibrary.BLL.Entities.User> bllService, UserSession userSession)
         {
             _bllService = bllService;
             _userSession = userSession;
@@ -73,7 +74,7 @@ namespace ProductLibrary.ASPMVC.Controllers
                 {
                     _userSession.UserId = userId;
                     _userSession.Email = form.Email;
-
+                    HttpContext.Session.SetString("UserId", userId.ToString());
                     return RedirectToAction("Index", "Product");
                 }
 

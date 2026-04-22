@@ -6,6 +6,7 @@ using ProductLibrary.Common;
 using System.Collections.Generic;
 using ProductLibrary.ASPMVC.Models.Product;
 using ProductLibrary.ASPMVC.Models.Stock;
+using ProductLibrary.ASPMVC.Handlers;
 
 
 namespace ProductLibrary.ASPMVC.Controllers
@@ -13,10 +14,12 @@ namespace ProductLibrary.ASPMVC.Controllers
     public class ProductController : Controller
     {
         private readonly IProductRepository<Product> _bllService;
+        private readonly UserSession _userSession;
 
-        public ProductController(IProductRepository<Product> bllService)
+        public ProductController(IProductRepository<Product> bllService, UserSession userSession)
         {
             _bllService = bllService;
+            _userSession = userSession;
         }
 
         public IActionResult Index()
@@ -65,7 +68,13 @@ namespace ProductLibrary.ASPMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var productCreate = new Product(form.Name, form.Description, form.CurrentPrice);
+                if (_userSession.UserId == null)
+                {
+                    return RedirectToAction("Login", "User");
+                }
+                Guid currentUserId = _userSession.UserId.Value;
+                var productCreate = new Product(form.Name, form.Description, form.CurrentPrice, currentUserId);
+
                 _bllService.Create(productCreate);
                 return RedirectToAction(nameof(Index));
             }
@@ -92,9 +101,21 @@ namespace ProductLibrary.ASPMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var productToUpdate = new Product(vm.ProductId, vm.Name, vm.Description, vm.CurrentPrice, vm.UserId);
-                _bllService.Update(id, productToUpdate,vm.UserId);
-                return RedirectToAction(nameof(Index));
+                if (_userSession.UserId == null)
+                {
+                    return RedirectToAction("Login", "User");
+                }
+                Guid currentUserId = _userSession.UserId.Value;
+                var productToUpdate = new Product(vm.ProductId, vm.Name, vm.Description, vm.CurrentPrice, currentUserId);
+                try
+                {
+                    _bllService.Update(id, productToUpdate, currentUserId);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex) 
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
             }
             return View(vm);
         }
@@ -156,8 +177,15 @@ namespace ProductLibrary.ASPMVC.Controllers
         public IActionResult AddStock(AddStockViewModel vm)
         {
             if (!ModelState.IsValid) return View(vm);
+
+            if (_userSession.UserId == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            Guid currentUserId = _userSession.UserId.Value;
             var product = _bllService.Get(vm.ProductId);
             int currentStock = product.StockEntries.Sum(s => s.StockOperation);
+            
             if (vm.Quantity == 0)
             {
                 ModelState.AddModelError("Quantity", "Veuillez saisir une quantité différente de zéro.");
@@ -171,7 +199,7 @@ namespace ProductLibrary.ASPMVC.Controllers
                 return View(vm);
             }
             //savegarder
-            _bllService.AddStock(vm.ProductId, vm.Quantity, vm.UserId);
+            _bllService.AddStock(vm.ProductId, vm.Quantity, currentUserId);
 
             return RedirectToAction("Details", new { id = vm.ProductId });
             

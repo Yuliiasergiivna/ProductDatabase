@@ -59,6 +59,7 @@
     <Folder Include="Table" />
     <Folder Include="Scripts" />
     <Folder Include="StoredProcedures" />
+    <Folder Include="Functions" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Table\Product.sql" />
@@ -81,6 +82,7 @@
     <RefactorLog Include="ProductDatabase.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ProductDatabase_1.publish.xml" />
+    <None Include="ProductDatabase.publish.xml" />
+    <Build Include="Functions\SF_SaltAndHash.sql" />
   </ItemGroup>
 </Project>

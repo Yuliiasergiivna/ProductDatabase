@@ -46,6 +46,10 @@ namespace ProductLibrary.BLL.Services
         {
             _dalService.Delete(productId);
         }
+        public void Delete(Entities.StockEntry stock)
+        {
+            _stockService.Delete(stock.StockEntryId);
+        }
 
         public IEnumerable<Entities.Product> Get()
         {
